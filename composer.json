@@ -1,0 +1,16 @@
+{
+  "name": "vendor_name/package_name",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "author's name",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "fabpot/goutte": "v2.0.3",
+    "phpexcel/phpexcel": "v1.7.7"
+  }
+}
