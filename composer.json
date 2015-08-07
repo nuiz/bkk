@@ -11,6 +11,7 @@
   ],
   "require": {
     "fabpot/goutte": "v2.0.3",
-    "phpexcel/phpexcel": "v1.7.7"
+    "phpexcel/phpexcel": "v1.7.7",
+    "phpoffice/phpexcel": "1.8.1"
   }
 }

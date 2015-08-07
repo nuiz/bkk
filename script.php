@@ -4,6 +4,7 @@ session_start();
  * greatrevenueproperty@gmail.com
  * GR1qaz2wsx
  */
+set_time_limit(0);
 header('Content-Type: text/html; charset=utf-8');
 include 'vendor/autoload.php';
 use Goutte\Client;
@@ -13,7 +14,7 @@ $a = array();
 $crawler = $client->request('GET', 'http://crm.bkkcitismart.com/');
 $form = $crawler->selectButton('')->form();
 //$crawler = $client->submit($form, array('data[User][user_name]' => "akekarirk_h", 'data[User][password]' => "waiwaiwai01"));
-$crawler = $client->submit($form, array('data[User][user_name]' => "prapatsorn_k", 'data[User][password]' => "9999"));
+$crawler = $client->submit($form, array('data[User][user_name]' => $_GET['username'], 'data[User][password]' => $_GET['password']));
 $crawler = $client->request('GET',"http://crm.bkkcitismart.com/Auth");
 $crawler = $client->request('GET', 'http://crm.bkkcitismart.com/Properties');
 $crawler = $client->request('GET', 'http://crm.bkkcitismart.com/properties/index/page:'.$_GET['page']);
@@ -36,14 +37,27 @@ else if($_GET["download_type"] == "view"){
 $subject = $crawler->html();
 $matches = [];
 preg_match_all($regex, $subject, $matches);
+if(empty($matches[0])){
+    echo "Can't find data";
+    exit();
+}
+
+if($_GET['page'] == 1){
+    $files = glob($dirFile.'/*');
+    foreach($files as $file){
+        if(is_file($file))
+            @unlink($file);
+    }
+}
 
 foreach($matches[0] as $key=> $value){
     $url = 'http://crm.bkkcitismart.com'.trim($value, "'");
     $node = $client->request('GET', $url);
-    $myfile = fopen($dirFile."/".$_GET['page']."_".$key.".html", "a") or die("Unable to open file!");
+    // $myfile = fopen($dirFile."/".$_GET['page']."_".$key.".html", "a") or die("Unable to open file!");
     $txt = $node->html();
-    fwrite($myfile, $txt);
-    fclose($myfile);
+    // fwrite($myfile, $txt);
+    // fclose($myfile);
+    file_put_contents($dirFile."/".$_GET['page']."_".$key.".html", $txt);
 }
 
 //$crawler->filter('.tblList')->each(function ($node) {

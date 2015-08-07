@@ -9,5 +9,5 @@ return array(
     'Symfony\\Component\\DomCrawler\\' => array($vendorDir . '/symfony/dom-crawler'),
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
     'Symfony\\Component\\BrowserKit\\' => array($vendorDir . '/symfony/browser-kit'),
-    'PHPExcel' => array($vendorDir . '/phpexcel/phpexcel/Classes'),
+    'PHPExcel' => array($vendorDir . '/phpexcel/phpexcel/Classes', $vendorDir . '/phpoffice/phpexcel/Classes'),
 );
