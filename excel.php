@@ -478,6 +478,23 @@ TAG;
         return trim($value);
     }
 
+    public function getUpdateMessage(){
+        $pos = strpos($this->html, '<table class="tblList" id="rsTable">');
+        $html = substr($this->html, $pos);
+        $pos = strpos($html, "</table>");
+        $html = substr($html, 0, $pos);
+        $pos = strpos($html, "<tbody>");
+        $html = substr($html, $pos);
+        $pos = strpos($html, "<td>");
+        $pos = strpos($html, "<td>", $pos + strlen("<td>"));
+        $html = substr($html, $pos + strlen("<td>"));
+        $pos = strpos($html, "</td>");
+        $value = substr($html, 0, $pos);
+
+        unset($pos, $html);
+        return trim($value);
+    }
+
     // tool function
     public function _getValFromRegex($regex){
         $math = [];
@@ -668,7 +685,9 @@ class Main {
             "source_list"=> $editPage->getSourceList(),
             "remark"=> $editPage->getRemark(),
             "comment"=> $editPage->getComment(),
-            "update_date"=> $editPage->getUpdateDate()
+            "update_date"=> $editPage->getUpdateDate(),
+            "update_message"=> $editPage->getUpdateMessage(),
+            "tier_level"=> $editPage->getTierLevel()
         ];
 
         unset($editPage, $html, $pos, $html2, $file);
